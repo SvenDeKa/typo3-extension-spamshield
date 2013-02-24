@@ -2,19 +2,19 @@
 
 /***************************************************************
 *  Copyright notice
-*  
+*
 *  (c) 2009  Dr. Ronald Steiner <Ronald.Steiner@googlemail.com>
 *  All rights reserved
 *
-*  This script is part of the Typo3 project. The Typo3 project is 
+*  This script is part of the Typo3 project. The Typo3 project is
 *  free software; you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
 *  the Free Software Foundation; either version 2 of the License, or
 *  (at your option) any later version.
-* 
+*
 *  The GNU General Public License can be found at
 *  http://www.gnu.org/copyleft/gpl.html.
-* 
+*
 *  This script is distributed in the hope that it will be useful,
 *  but WITHOUT ANY WARRANTY; without even the implied warranty of
 *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -23,14 +23,27 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once (PATH_tslib."class.tslib_pibase.php");
-require_once (PATH_tslib."class.tslib_content.php");
-
-class tx_spamshield_formmodifier extends tslib_pibase {
+class tx_spamshield_formmodifier extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 
 	var $prefixId = "tx_spamshield_formmodifier";				// Same as class name
 	var $scriptRelPath = "class.tx_spamshield_formmodifier.php";		// Path to this script relative to the extension dir.
 	var $extKey = "spamshield";		// The extension key.
+
+	/**
+	 * @var \Tx\Spamshield\Utilities\SessionHandler
+	 */
+	protected $sessionHandler;
+
+	/**
+	 * @var \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+	 */
+	protected $tsfe;
+
+	public function __construct() {
+		parent::__construct();
+		$this->tsfe = $GLOBALS['TSFE'];
+
+	}
 
 	/**
 	 * Hook output after rendering the content.
@@ -41,9 +54,9 @@ class tx_spamshield_formmodifier extends tslib_pibase {
 	 * @return	void
 	 */
 	function intPages (&$params,&$that) {
-		if (!$GLOBALS['TSFE']->isINTincScript()) {
+		if (!$this->tsfe->isINTincScript()) {
 			return;
-		} 
+		}
 		$this->main ($params['pObj']->content, $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_spamshield.']);
 	}
 
@@ -56,9 +69,9 @@ class tx_spamshield_formmodifier extends tslib_pibase {
 	 * @return	void
 	 */
 	function noIntPages (&$params,&$that) {
-		if ($GLOBALS['TSFE']->isINTincScript()) {
+		if ($this->tsfe->isINTincScript()) {
 			return;
-		} 
+		}
 		$this->main ($params['pObj']->content, $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_spamshield.']);
 	}
 
@@ -71,6 +84,9 @@ class tx_spamshield_formmodifier extends tslib_pibase {
 	 * @return	void
 	 */
 	function main (&$html, &$conf) {
+		$this->sessionHandler = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx\\Spamshield\\Utilities\\SessionHandler');
+		$this->cObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\ContentObject\\ContentObjectRenderer');
+		$this->cObj->start();
 		if ($conf['add2forms'] && strstr($html,'<form')) {
 			$newForms = $orgForms = $this->getForms($html);
 			for ($i = 0; $i < sizeof($newForms); $i++) {
@@ -79,7 +95,7 @@ class tx_spamshield_formmodifier extends tslib_pibase {
 				}
 			}
 			$html = str_replace($orgForms,$newForms,$html);
-		}			
+		}
 	}
 
 	/**
@@ -92,7 +108,7 @@ class tx_spamshield_formmodifier extends tslib_pibase {
 		preg_match_all ("/(?s)(<[ \n\r]*form[^>]*>.*?<[ \n\r]*\/form[^>]*>)/is", $html, $matches);
 		return $matches[0];
 	}
-	
+
 	/**
 	 * include a fields to a form
 	 * e.g. inclusion of markers (required) and honeypots (have to be empty)
@@ -103,8 +119,9 @@ class tx_spamshield_formmodifier extends tslib_pibase {
 	 */
 	function add2forms (&$form,$conf) {
 		$newInputs = $inputs = $this->getInputs($form);
+		$honeypotArray = $this->renderHoneypots($conf);
 		if ($conf['position'] == "rnd") {
-			foreach ($conf['fields.'] as $honeyPot) {
+			foreach ($honeypotArray as $honeyPot) {
 				$changePos = mt_rand(0,sizeof($newInputs)-1);
 				if (mt_rand(0,1) == 1) {
 					$newInputs[$changePos] = $honeyPot.$newInputs[$changePos];
@@ -115,14 +132,14 @@ class tx_spamshield_formmodifier extends tslib_pibase {
 			}
 		}
 		elseif ($conf['position'] == 'end') {
-			$newInputs[sizeof($newInputs)-1] = $newInputs[sizeof($newInputs)-1].implode('',$conf['fields.']);
+			$newInputs[sizeof($newInputs)-1] = $newInputs[sizeof($newInputs)-1].implode('',$honeypotArray);
 		}
 		elseif ($conf['position'] == 'start') {
-			$newInputs[0] = implode('',$conf['fields.']).$newInputs[0];
+			$newInputs[0] = implode('',$honeypotArray).$newInputs[0];
 		}
 		elseif ($conf['position'] == 'start-end') {
 			$i = 0;
-			foreach ($conf['fields.'] as $honeypot) {
+			foreach ($honeypotArray as $honeypot) {
 				if ($i%2) {
 					$newInputs[0] = $honeypot.$newInputs[0];
 				}
@@ -134,7 +151,7 @@ class tx_spamshield_formmodifier extends tslib_pibase {
 		}
 		$form = str_replace($inputs,$newInputs,$form);
 	}
-	
+
 	/**
 	 * regex rules for disabling for single forms
 	 *
@@ -146,14 +163,14 @@ class tx_spamshield_formmodifier extends tslib_pibase {
 		if (is_array($conf)) {
 			foreach($conf as $pattern) {
 				if(preg_match('/' . preg_quote($pattern, '/') . '/is', $form)) {
-					return true;
+					return TRUE;
 				}
 			}
 		}
 
-		return false;
+		return FALSE;
 	}
-	
+
 	/**
 	 * get all input fields out of a form
 	 * help function for honeypots
@@ -165,9 +182,40 @@ class tx_spamshield_formmodifier extends tslib_pibase {
 		preg_match_all ("/(?s)(<[ \n\r]*input.*?[ \n\r]*[^>]*>)/is", $form, $matches);
 		return $matches[0];
 	}
+
+	/**
+	 * Renders the configured honeypot fields in an array. If a configuration has a subconfiguration
+	 * (like 10 = TEXT, 10.value = Hallo world), the entry will be rendered as a content object.
+	 *
+	 * Otherwise a simple string will be added.
+	 *
+	 * If the rendered honeypot contains a ###SESSION_TIMESTAMP_ID### marker it will be repaced with
+	 * the current session timestamp ID.
+	 *
+	 * @param array $conf
+	 * @return array
+	 */
+	protected function renderHoneypots($conf) {
+
+		$sessionTimestampId = $this->sessionHandler->createOrUpdateSessionTimestamp();
+		$fieldConfigArray = $conf['fields.'];
+		$honeypots = array();
+
+		foreach ($fieldConfigArray as $key => $fieldConfig) {
+
+			if (array_key_exists($key . '.', $fieldConfigArray)) {
+				$honeypotContent = $this->cObj->cObjGetSingle($fieldConfig, $fieldConfigArray[$key . '.']);
+			} else {
+				$honeypotContent = $fieldConfig;
+			}
+
+			$honeypotContent = $this->cObj->substituteMarker($honeypotContent, '###SESSION_TIMESTAMP_ID###', $sessionTimestampId);
+
+			$honeypots[] = $honeypotContent;
+		}
+
+		return $honeypots;
+	}
 }
 
-if (defined("TYPO3_MODE") && $TYPO3_CONF_VARS[TYPO3_MODE]["XCLASS"]["ext/spamshield/class.tx_spamshield_formmodifier.php"]){
-		include_once($TYPO3_CONF_VARS[TYPO3_MODE]["XCLASS"]["ext/spamshield/class.tx_spamshield_formmodifier.php"]);
-}
 ?>
