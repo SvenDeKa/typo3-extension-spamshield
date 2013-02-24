@@ -28,23 +28,12 @@ t3lib_extMgm::addPItoST43($_EXTKEY, 'pi1/class.tx_spamshield_pi1.php', '_pi1', '
 #####################################################
 ## scheduler task                             #######
 #####################################################
-if (t3lib_div::compat_version('4.6')) {
-	// Register tx_spamshield_log table in table garbage collection task
-	if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['tx_scheduler_TableGarbageCollection']['options']['tables']['tx_spamshield_log'])) {
-		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['tx_scheduler_TableGarbageCollection']['options']['tables']['tx_spamshield_log'] = array(
-			'dateField' => 'tstamp',
-			'expirePeriod' => 180,
-		);
-	}
-} 
-else {
-	//@TODO: Remove this when TYPO3 4.5 LTS is not supported any more (in April 2014)
-	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['tx_spamshield_logcleaner'] = array(
-		'extension'        => $_EXTKEY,
-		'title'            => 'LLL:EXT:' . $_EXTKEY . '/locallang.xml:tx_spamshield_log.task.name',
-		'description'      => 'LLL:EXT:' . $_EXTKEY . '/locallang.xml:tx_spamshield_log.task.description',
-		'additionalFields' => 'tx_spamshield_logcleaner_additionalfields'
-	);
-}
+
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['tx_spamshield_logcleaner'] = array(
+	'extension'        => $_EXTKEY,
+	'title'            => 'LLL:EXT:' . $_EXTKEY . '/locallang.xml:tx_spamshield_log.task.name',
+	'description'      => 'LLL:EXT:' . $_EXTKEY . '/locallang.xml:tx_spamshield_log.task.description',
+	'additionalFields' => 'tx_spamshield_logcleaner_additionalfields'
+);
 #####################################################
 ?>
