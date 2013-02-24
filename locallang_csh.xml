@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+    <meta type="array">
+        <description>CSH for Spamshield Labels</description>
+        <type>CSH</type>
+        <csh_table>spamshield</csh_table>
+        <fileId>EXT:spamshield/locallang_csh.xml</fileId>
+    </meta>
+    <data type="array">
+        <languageKey index="default" type="array">
+            <label index="age.alttitle">Select age</label>
+            <label index="age.description">Select how old the logs can be before they will be deleted.</label>
+        </languageKey>
+        <languageKey index="de" type="array">
+            <label index="age.alttitle">Alter wählen</label>
+            <label index="age.description">Wählen Sie das Alter aus, nach dessen Überschreitung die Spamlogeinträge gelöscht werden sollen.</label>
+        </languageKey>
+    </data>
+</T3locallang>

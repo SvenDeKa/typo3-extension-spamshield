@@ -1,0 +1,19 @@
+.tx_spamshield_honey1 {
+	display:none !important;
+}
+.tx_spamshield_honey3 {
+	position: absolute  !important;
+	margin: 0 0 0 -9999px  !important;
+}
+
+.tx_spamshield_honey2 {
+  	width: 0 !important;
+	height: 0 !important;
+	display: inline;
+	padding: 0;
+	margin: 0;
+	border: 0 !important;
+}
+.tx_spamshield_honey4 {
+   	visibility:hidden !important;
+}

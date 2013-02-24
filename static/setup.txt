@@ -1,0 +1,32 @@
+# for javascirpt check
+page.jsInline.5289 = TEXT
+page.jsInline.5289.value = document.cookie = 'spamshield=true' ;
+
+# css for hiding honeypots
+#page.includeCSS.spamshield = typo3conf/ext/spamshield/style.css
+
+# adding to all forms - for honeypot check
+plugin.tx_spamshield = USER
+plugin.tx_spamshield {
+	add2forms = 1
+	add2forms {
+		# regular expression for a form to disable the add2forms option
+		# 5 is used to detect the pi1 form, which MUST NOT be parsed twice!
+		off {
+			5 = name="frmnoadd2form"
+			10 = method="get"
+		}
+
+		# positions: start, end, start-end, rnd
+		position = start-end
+
+		# fields to add. Notice: the last field is a mark to help spamshield detect forms (see: detectGETby)
+    	fields {
+			10 = <span style="position: absolute !important; margin: 0 0 0 -9999px !important;"><label>Don't fill this field!</label><input type="text" name="importantMessage" value="" /></span>
+			#10 = <input type="text" name="email" value="" style="display:none !important;" />
+			#20 = <input type="text" name="name" value="" class="tx_spamshield_honey1" />
+			#30 = <input type="text" name="first-name" value="" style="position: absolute !important; margin: 0 0 0 -9999px !important;" />
+			#40 = <input type="text" name="e-mail" value="" class="tx_spamshield_honey1" />
+		}
+	}
+}
