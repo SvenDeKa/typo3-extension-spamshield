@@ -29,11 +29,12 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['determine
 ## scheduler task                             #######
 #####################################################
 
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['tx_spamshield_logcleaner'] = array(
-	'extension'        => $_EXTKEY,
-	'title'            => 'LLL:EXT:' . $_EXTKEY . '/locallang.xml:tx_spamshield_log.task.name',
-	'description'      => 'LLL:EXT:' . $_EXTKEY . '/locallang.xml:tx_spamshield_log.task.description',
-	'additionalFields' => 'tx_spamshield_logcleaner_additionalfields'
-);
+// Register tx_spamshield_log table in table garbage collection task
+if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['TYPO3\\CMS\\Scheduler\\Task\\TableGarbageCollectionTask']['options']['tables']['tx_spamshield_log'])) {
+	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['TYPO3\\CMS\\Scheduler\\Task\\TableGarbageCollectionTask']['options']['tables']['tx_spamshield_log'] = array(
+		'dateField' => 'tstamp',
+		'expirePeriod' => 180,
+	);
+}
 #####################################################
 ?>
