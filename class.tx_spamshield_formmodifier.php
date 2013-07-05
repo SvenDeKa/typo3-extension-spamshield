@@ -86,7 +86,7 @@ class tx_spamshield_formmodifier extends \TYPO3\CMS\Frontend\Plugin\AbstractPlug
 	function main (&$html, &$conf) {
 		$this->sessionHandler = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx\\Spamshield\\Utilities\\SessionHandler');
 		$this->cObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\ContentObject\\ContentObjectRenderer');
-		$this->cObj->start();
+		$this->cObj->start(array());
 		if ($conf['add2forms'] && strstr($html,'<form')) {
 			$newForms = $orgForms = $this->getForms($html);
 			for ($i = 0; $i < sizeof($newForms); $i++) {
