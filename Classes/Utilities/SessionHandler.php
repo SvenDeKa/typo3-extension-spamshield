@@ -25,7 +25,7 @@ class SessionHandler implements \TYPO3\CMS\Core\SingletonInterface {
 	protected $configUtils;
 
 	/**
-	 * @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthtenication
+	 * @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication
 	 */
 	protected $feUser;
 
