@@ -27,8 +27,6 @@
  * Hint: use extdeveval to insert/update function index above.
  */
 
-require_once(PATH_tslib.'class.tslib_pibase.php');
-
 /**
  * Plugin 'spamshield: Auth-Code-Handler' for the 'spamshield' extension.
  *
@@ -40,9 +38,9 @@ class tx_spamshield_pi1 extends tslib_pibase {
 	var $prefixId      = 'tx_spamshield_pi1';		// Same as class name
 	var $scriptRelPath = 'pi1/class.tx_spamshield_pi1.php';	// Path to this script relative to the extension dir.
 	var $extKey        = 'spamshield';	// The extension key.
-	
+
 	var $GETparams     = array();   // GET-Params
-	
+
 	/**
 	 * The main method of the PlugIn
 	 *
@@ -55,9 +53,9 @@ class tx_spamshield_pi1 extends tslib_pibase {
 		$this->pi_setPiVarDefaults();
 		$this->pi_loadLL();
 		$this->pi_USER_INT_obj = 1;	// Configuring so caching is not expected. This value means that no cHash params are ever set. We do this, because it's a USER_INT object!
-	
+
 		$this->GETparams = t3lib_div::_GET();
-		
+
 		if (!t3lib_extMgm::isLoaded('sr_freecap') && !t3lib_extMgm::isLoaded('captcha')) {
 			$content = '<div class="message red">'.htmlspecialchars($this->pi_getLL('message.nocaptcha')).'</div>';
 		} elseif (!$this->GETparams['uid'] || !$this->GETparams['auth']) {
@@ -80,9 +78,9 @@ class tx_spamshield_pi1 extends tslib_pibase {
 		}
 		return $this->pi_wrapInBaseClass($content);
 	}
-	
+
 	/**
-	* Checks a given auth code 
+	* Checks a given auth code
 	*
 	* @param    int		auth code
 	* @param	array	DB-Row to check the auth code
@@ -99,13 +97,13 @@ class tx_spamshield_pi1 extends tslib_pibase {
 			return false;
 		}
 	}
-	
+
 	/**
-	* renders a form 
+	* renders a form
 	*
 	* @param    array	the DB-Row of the spam log
 	* @return	string	the form
-	*/		
+	*/
 	function renderForm($data) {
 		$post = unserialize(stripslashes($data['postvalues'])); // stripslashes needed because data is stored in DB with: mysql_escape_string
 		unset ($post['spamshield']['uid']);
@@ -124,7 +122,7 @@ class tx_spamshield_pi1 extends tslib_pibase {
 							$input[] = '<input type="hidden" name="'.$key.'['.$a.']['.$x.']" value="'.$y.'" />';
 						}
 					}
-				}		
+				}
 			}
 		}
 
@@ -145,7 +143,7 @@ class tx_spamshield_pi1 extends tslib_pibase {
 		$input[] = '<input type="submit" value="'.htmlspecialchars($this->pi_getLL('form.submit')).'" />';
 		$form = "<form action='".$data['requesturl']."' method='post' name='frmnoadd2form'>".implode('',$input)."</form>";
 		return $form;
-	}	
+	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/spamshield/pi1/class.tx_spamshield_pi1.php'])	{
