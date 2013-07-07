@@ -295,26 +295,31 @@ class tx_spamshield_varanalyzer extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugi
 	function dbLog() {
 		if ($this->piVars['refpid']) {
 			$ref = $this->piVars['refpid'];
-		}
-		else {
+		} else {
 			$ref = $GLOBALS['TSFE']->id;
 		}
 		/*  mask recursive */
-        $this->mask( new RecursiveArrayIterator($this->POSTparams),'pass');
-		$data = array (
-			'pid' => mysql_real_escape_string($this->conf['logpid']),  // spam-log storage page
-			'tstamp' => time(),
-			'crdate' => time(),
-			'spamWeight' => mysql_real_escape_string($this->spamWeight),
-			'spamReason' => mysql_real_escape_string(implode(',',$this->spamReason)),
-			'postvalues' => mysql_real_escape_string(serialize($this->POSTparams)),
-			'getvalues' => mysql_real_escape_string(serialize($this->GETparams)),
-			'pageid' => mysql_real_escape_string($ref),
+		$this->mask(new RecursiveArrayIterator($this->POSTparams), 'pass');
+		$data = array(
+			'spamReason' => implode(',', $this->spamReason),
+			'postvalues' => serialize($this->POSTparams),
+			'getvalues' => serialize($this->GETparams),
+			'pageid' => $ref,
 			'requesturl' => \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'),
-			'ip' => mysql_real_escape_string(\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('REMOTE_ADDR')),
-			'useragent' => mysql_real_escape_string(\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('HTTP_USER_AGENT')),
-			'referer' => mysql_real_escape_string(\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('HTTP_REFERER')),
-			'solved' => 0
+			'ip' => \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('REMOTE_ADDR'),
+			'useragent' => \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('HTTP_USER_AGENT'),
+			'referer' => \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('HTTP_REFERER'),
+		);
+		$data = $this->db->fullQuoteArray($data, 'tx_spamshield_log');
+		$data = array_merge(
+			$data,
+			array(
+				'pid' => intval($this->conf['logpid']), // spam-log storage page
+				'tstamp' => time(),
+				'crdate' => time(),
+				'spamWeight' => intval($this->spamWeight),
+				'solved' => 0
+			)
 		);
 		$this->db->exec_INSERTquery('tx_spamshield_log', $data); // DB entry
 		$data['uid'] = $this->db->sql_insert_id();
