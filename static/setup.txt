@@ -23,7 +23,6 @@ plugin.tx_spamshield {
 		# fields to add. Notice: the last field is a mark to help spamshield detect forms (see: detectGETby)
     	fields {
 			10 = <span style="position: absolute !important; margin: 0 0 0 -9999px !important;"><label>Don't fill this field!</label><input type="text" name="importantMessage" value="" /></span>
-			20 = <input type="hidden" name="spamshield[session_timestamp_id]" value="###SESSION_TIMESTAMP_ID###" />
 			#10 = <input type="text" name="email" value="" style="display:none !important;" />
 			#20 = <input type="text" name="name" value="" class="tx_spamshield_honey1" />
 			#30 = <input type="text" name="first-name" value="" style="position: absolute !important; margin: 0 0 0 -9999px !important;" />

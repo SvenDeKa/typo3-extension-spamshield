@@ -197,9 +197,19 @@ class tx_spamshield_formmodifier extends \TYPO3\CMS\Frontend\Plugin\AbstractPlug
 	 */
 	protected function renderHoneypots($conf) {
 
-		$sessionTimestampId = $this->sessionHandler->createOrUpdateSessionTimestamp();
 		$fieldConfigArray = $conf['fields.'];
 		$honeypots = array();
+
+		$sessionTimestampId = $this->sessionHandler->createOrUpdateSessionTimestamp();
+		$honeypots[] = '<input type="hidden" name="spamshield[session_timestamp_id]" value="' . $sessionTimestampId . '" />';
+
+		// since chromes stupid autofill feature always fills out the
+		// honeypot we do not render it when the user agent is Chrome
+		// see also: https://code.google.com/p/chromium/issues/detail?id=132135
+		$userAgent = \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('HTTP_USER_AGENT');
+		if (strpos($userAgent, 'Chrome') !== FALSE) {
+			return $honeypots;
+		}
 
 		foreach ($fieldConfigArray as $key => $fieldConfig) {
 
@@ -208,8 +218,6 @@ class tx_spamshield_formmodifier extends \TYPO3\CMS\Frontend\Plugin\AbstractPlug
 			} else {
 				$honeypotContent = $fieldConfig;
 			}
-
-			$honeypotContent = $this->cObj->substituteMarker($honeypotContent, '###SESSION_TIMESTAMP_ID###', $sessionTimestampId);
 
 			$honeypots[] = $honeypotContent;
 		}
