@@ -1,6 +1,3 @@
-# for javascirpt check
-page.jsInline.5289 = TEXT
-page.jsInline.5289.value = document.cookie = 'spamshield=true' ;
 
 # css for hiding honeypots
 #page.includeCSS.spamshield = typo3conf/ext/spamshield/style.css
@@ -28,5 +25,42 @@ plugin.tx_spamshield {
 			#30 = <input type="text" name="first-name" value="" style="position: absolute !important; margin: 0 0 0 -9999px !important;" />
 			#40 = <input type="text" name="e-mail" value="" class="tx_spamshield_honey1" />
 		}
+	}
+}
+
+plugin.tx_spamshield {
+
+
+	fieldValidation {
+
+		10 {
+			type = mustBeEmpty
+			fieldName = {$plugin.tx_spamshield.formFieldPrefix}[firstName]
+		}
+		20 {
+			type = mustBeEmpty
+			fieldName = {$plugin.tx_spamshield.formFieldPrefix}[lastName]
+		}
+		30 {
+			type = mustBeEmpty
+			fieldName = {$plugin.tx_spamshield.formFieldPrefix}[email]
+		}
+		60 {
+			type = mustHaveValue
+			fieldName = {$plugin.tx_spamshield.formFieldPrefix}[otherName]
+			expectedValue = Mustermann
+		}
+
+	}
+
+}
+
+tt_content.spamshield_protectedplugin = COA_INT
+tt_content.spamshield_protectedplugin {
+	10 =< tt_content.list
+	10.20.key.override = spamshield_spamhandler
+	10.20.key.override.if.isTrue {
+		cObject = USER
+		cObject.userFunc = Tx\Spamshield\Controller\ContentController->isSpamOrSpamPluginActive
 	}
 }

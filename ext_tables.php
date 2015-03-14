@@ -1,51 +1,28 @@
 <?php
-if (!defined ('TYPO3_MODE'))
+if (!defined('TYPO3_MODE')) {
 	die ('Access denied.');
+}
 
-#####################################################
-## FE-Plugin                                  #######
-#####################################################
-t3lib_div::loadTCA('tt_content');
-$TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY.'_pi1']='layout,select_key,pages';
-t3lib_extMgm::addPlugin(array(
+$pluginSignature = 'spamshield_protectedplugin';
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(array(
 	'LLL:EXT:spamshield/locallang_db.xml:tt_content.list_type_pi1',
-	$_EXTKEY . '_pi1',
-	t3lib_extMgm::extRelPath($_EXTKEY) . 'ext_icon.gif'
-),'list_type');
-#####################################################
+	$pluginSignature,
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'ext_icon.gif'
+), 'CType');
 
-#####################################################
-## TCA to show DB-Table in BE                 #######
-#####################################################
-$TCA['tx_spamshield_log'] = array (
-    'ctrl' => array (
-        'title'     => 'Spamshield',
-        'label'     => 'spamreason',
-        'label_alt' => 'pageid,solved',
-		'label_alt_force' => 1,
-        'tstamp'    => 'tstamp',
-        'crdate'    => 'crdate',
-        'cruser_id' => 'cruser_id',
-        'default_sortby' => "ORDER BY crdate DESC",
-        'delete' => 'deleted',
-        'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
-        'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_spamshield_log.gif',
-    ),
-    'feInterface' => array (
-        'fe_admin_fieldList' => 'spamreason, spamweight, postvalues, getvalues, requesturl, pageid, referer, ip, useragent, solved'
-    )
-);
-#####################################################
+$GLOBALS['TCA']['tt_content']['types'][$pluginSignature] = &$GLOBALS['TCA']['tt_content']['types']['list'];
 
-#####################################################
-## Make TS available                          #######
-#####################################################
-t3lib_extMgm::addStaticFile($_EXTKEY,'static/', 'spamshield spam protection');  // for TS template
-#####################################################
+if (is_array($GLOBALS['TCA']['tt_content']['columns']['pi_flexform']['config']['ds'])) {
+	$currentFlexformConfig = $GLOBALS['TCA']['tt_content']['columns']['pi_flexform']['config']['ds'];
+	foreach ($currentFlexformConfig as $key => $value) {
+		list($piKeyToMatch, $CTypeToMatch) = explode(',', $key);
+		if ($CTypeToMatch === 'list') {
+			$GLOBALS['TCA']['tt_content']['columns']['pi_flexform']['config']['ds'][$piKeyToMatch . ',' . $pluginSignature] = &$GLOBALS['TCA']['tt_content']['columns']['pi_flexform']['config']['ds'][$piKeyToMatch . ',list'];
+		}
+	}
+}
 
-#####################################################
-## Context sensitive help for tasks           #######
-#####################################################
-t3lib_extMgm::addLLrefForTCAdescr('spamshield','EXT:spamshield/locallang_csh.xml');
-#####################################################
-?>
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript/', 'spamshield spam protection'); // for TS template
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('spamshield', 'EXT:spamshield/locallang_csh.xml');
