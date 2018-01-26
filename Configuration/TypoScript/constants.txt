@@ -1,0 +1,15 @@
+plugin.tx_spamshield_captcha {
+	view {
+		# cat=plugin.tx_spamshield_captcha/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:spamshield/Resources/Private/Templates/
+		# cat=plugin.tx_spamshield_captcha/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:spamshield/Resources/Private/Partials/
+		# cat=plugin.tx_spamshield_captcha/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:spamshield/Resources/Private/Layouts/
+	}
+
+	persistence {
+		# cat=plugin.tx_spamshield_captcha//a; type=string; label=Default storage PID
+		storagePid =
+	}
+}

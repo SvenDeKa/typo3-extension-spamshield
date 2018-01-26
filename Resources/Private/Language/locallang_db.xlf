@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-05-31T19:51:39Z" product-name="spamshield">
+		<header/>
+		<body>
+			<trans-unit id="plugin.captcha" xml:space="preserve">
+				<source>Spamshield: Captcha</source>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.spamreason" xml:space="preserve">
+				<source>Spam reason</source>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.spamweight" xml:space="preserve">
+				<source>Spam weight</source>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.postvalues" xml:space="preserve">
+				<source>POST values</source>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.getvalues" xml:space="preserve">
+				<source>GET values</source>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.requesturl" xml:space="preserve">
+				<source>Request URL</source>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.pageid" xml:space="preserve">
+				<source>Referer PID</source>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.referer" xml:space="preserve">
+				<source>Referer URL</source>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.ip" xml:space="preserve">
+				<source>User IP</source>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.useragent" xml:space="preserve">
+				<source>User Agent</source>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.solved" xml:space="preserve">
+				<source>Captcha solved</source>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.task.name" xml:space="preserve">
+				<source>spamshield: delete log</source>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.task.description" xml:space="preserve">
+				<source>Delete old log entries.</source>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.task.day" xml:space="preserve">
+				<source>day</source>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.task.days" xml:space="preserve">
+				<source>days</source>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.task.age" xml:space="preserve">
+				<source>Age</source>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.task.noage" xml:space="preserve">
+				<source>Please enter a how old the entries should be that get deleted.</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

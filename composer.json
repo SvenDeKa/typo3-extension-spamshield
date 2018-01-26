@@ -1,0 +1,39 @@
+{
+    "name": "sgalinski/spamshield",
+    "type": "typo3-cms-extension",
+    "description": "Universal invisible Spamshield for TYPO3",
+    "keywords": [
+        "TYPO3",
+        "Spamshield"
+    ],
+    "authors": [
+        {
+            "name": "Ronald P. Steiner",
+            "email": "Ronald.Steiner@googlemail.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Hauke Hain",
+            "email": "fearistic@gmail.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Christian Seifert",
+            "email": "christian-f-seifert@gmx.de",
+            "role": "Developer"
+        }
+    ],
+    "license": "GPL-2.0+",
+    "require": {
+        "typo3/cms-core": "^7.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "SpamshieldTeam\\Spamshield\\": "Classes/"
+        }
+    },
+    "replace": {
+        "spamshield": "self.version",
+        "typo3-ter/spamshield": "self.version"
+    }
+}

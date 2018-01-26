@@ -7,17 +7,17 @@ secondLine = httpbl,2;useragent,1;referer,1;cookie,1;honeypot,2
 # cat=basic; type=string; label=Honepot field names: Enter the names of the input fields (comma separated) defined in the plugin.tx_spamshield.add2forms.fields TypoScript setting. Spamshield recognises the honepots by the names entered here. Important: The honepot name has to be unique on the page!
 honeypot = importantMessage
 
-# cat=basic; type=int [0-255]; label=Crictical Weight for spam: A user is blocked when this spam weight is fulfilled.
+# cat=basic; type=int [0-255]; label=Critical Weight for spam: A user is blocked when this spam weight is fulfilled.
 weight = 2
 
 # cat=basic; type=string; label=httpbl - httpbl.org Access Key: Access Keys are 12-alpha characters (no numbers). They are lower-case. Get one from httpbl.org
-accesskey = 
+accesskey =
 
 # cat=basic; type=int [0-255]; label=httpbl - Blocking type: IP type (bitfield) required for an IP to be blocked. 2 is recommended.
 type = 2
 
-# cat=basic; type=string; label=referer - whitelist: if you want to recieve form data from exteranal pages, you can define them in this white list (domain1.de,domain2.com).
-whitelist = 
+# cat=basic; type=string; label=referrer - whitelist: if you want to recieve form data from external pages, you can define them in this white list (domain1.de,domain2.com).
+whitelist =
 
 # cat=basic; type=int+; label=Spamlog PID: The PID where you want spam to be logged. Enter zero to disable logging.
 logpid = 0

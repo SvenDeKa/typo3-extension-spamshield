@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2016-05-31T19:51:39Z" product-name="spamshield">
+		<header/>
+		<body>
+			<trans-unit id="plugin.captcha" xml:space="preserve" approved="yes">
+				<source>Spamshield: Captcha</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.spamreason" xml:space="preserve" approved="yes">
+				<source>Spam reason</source>
+				<target>Spamgrund</target>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.spamweight" xml:space="preserve" approved="yes">
+				<source>Spam weight</source>
+				<target>Spamgewichtung</target>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.postvalues" xml:space="preserve" approved="yes">
+				<source>POST values</source>
+				<target>POST Werte</target>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.getvalues" xml:space="preserve" approved="yes">
+				<source>GET values</source>
+				<target>GET Werte</target>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.requesturl" xml:space="preserve" approved="yes">
+				<source>Request URL</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.pageid" xml:space="preserve" approved="yes">
+				<source>Referer PID</source>
+				<target>Referer PID</target>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.referer" xml:space="preserve" approved="yes">
+				<source>Referer URL</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.ip" xml:space="preserve" approved="yes">
+				<source>User IP</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.useragent" xml:space="preserve" approved="yes">
+				<source>User Agent</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.solved" xml:space="preserve" approved="yes">
+				<source>Captcha solved</source>
+				<target>Captcha gelöst</target>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.task.name" xml:space="preserve" approved="yes">
+				<source>spamshield: delete log</source>
+				<target>spamshield: Log löschen</target>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.task.description" xml:space="preserve" approved="yes">
+				<source>Delete old log entries.</source>
+				<target>Alte Log-Einträge löschen.</target>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.task.day" xml:space="preserve" approved="yes">
+				<source>day</source>
+				<target>Tag</target>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.task.days" xml:space="preserve" approved="yes">
+				<source>days</source>
+				<target>Tage</target>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.task.age" xml:space="preserve" approved="yes">
+				<source>Age</source>
+				<target>Alter</target>
+			</trans-unit>
+			<trans-unit id="tx_spamshield_log.task.noage" xml:space="preserve" approved="yes">
+				<source>Please enter a how old the entries should be that get deleted.</source>
+				<target>Bitte geben Sie einen Wert an, wie alt die zu löschenden Logeinträge sein sollen.</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

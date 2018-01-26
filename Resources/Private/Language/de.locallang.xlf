@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2016-05-31T19:51:08Z" product-name="spamshield">
+		<header/>
+		<body>
+			<trans-unit id="message.nocaptcha" xml:space="preserve" approved="yes">
+				<source>No captcha extension is loaded!</source>
+				<target>Es ist keine Captcha Extension installiert!</target>
+			</trans-unit>
+			<trans-unit id="message.wronglink" xml:space="preserve" approved="yes">
+				<source>Wrong Link</source>
+				<target>Falscher Link</target>
+			</trans-unit>
+			<trans-unit id="message.wronguid" xml:space="preserve" approved="yes">
+				<source>Wrong UID</source>
+				<target>Falsche UID</target>
+			</trans-unit>
+			<trans-unit id="message.wrongauth" xml:space="preserve" approved="yes">
+				<source>Wrong Auth-Code</source>
+				<target>Falscher Auth-Code</target>
+			</trans-unit>
+			<trans-unit id="form.submit" xml:space="preserve" approved="yes">
+				<source>submit</source>
+				<target>senden</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

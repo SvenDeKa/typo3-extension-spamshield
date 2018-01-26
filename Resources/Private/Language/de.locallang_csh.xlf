@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2016-05-31T19:51:25Z" product-name="spamshield">
+		<header/>
+		<body>
+			<trans-unit id="age.alttitle" xml:space="preserve" approved="yes">
+				<source>Select age</source>
+				<target>Alter wählen</target>
+			</trans-unit>
+			<trans-unit id="age.description" xml:space="preserve" approved="yes">
+				<source>Select how old the logs can be before they will be deleted.</source>
+				<target>Wählen Sie das Alter aus, nach dessen Überschreitung die Spamlogeinträge gelöscht werden sollen.</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
